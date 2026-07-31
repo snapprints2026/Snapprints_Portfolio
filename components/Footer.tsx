@@ -94,9 +94,9 @@ export default function Footer() {
 
           <ul className="space-y-3 text-slate-400">
 
-            <li>📧 hello@snapprint.in</li>
+            <li>📧 support.snapprints@gmail.com</li>
 
-            <li>📞 +91 XXXXX XXXXX</li>
+            <li>📞 +91 9321892407</li>
 
             <li>📍 Navi Mumbai</li>
 

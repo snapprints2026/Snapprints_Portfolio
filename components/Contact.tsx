@@ -62,7 +62,7 @@ export default function Contact({
                   </h4>
 
                   <p className="text-slate-400">
-                    hello@snapprint.in
+                    support.snapprints@gmail.com
                   </p>
                 </div>
 
