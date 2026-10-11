@@ -31,6 +31,8 @@ const PAYMENT_METHOD_LABELS = {
   emi: "EMI",
 };
 
+const DAY_LABELS = { MON: "Mon", TUE: "Tue", WED: "Wed", THU: "Thu", FRI: "Fri", SAT: "Sat", SUN: "Sun" };
+
 function paymentLabel(job) {
   if (!job.payment_method) return "—";
   const base = PAYMENT_METHOD_LABELS[job.payment_method] || job.payment_method;
@@ -39,6 +41,24 @@ function paymentLabel(job) {
     return `${base} •••• ${job.payment_details.last4}`;
   }
   return base;
+}
+
+function timingsLabel(machine) {
+  const hours =
+    machine.open_time && machine.close_time ? `${machine.open_time}–${machine.close_time}` : null;
+  const off = machine.weekly_off
+    ? `closed ${machine.weekly_off.split(",").map((d) => DAY_LABELS[d] || d).join(", ")}`
+    : null;
+  return [hours, off].filter(Boolean).join(", ") || null;
+}
+
+function InfoItem({ label, children }) {
+  return (
+    <div>
+      <dt className="text-xs text-gray-400">{label}</dt>
+      <dd className="text-sm text-gray-700">{children || "—"}</dd>
+    </div>
+  );
 }
 
 const REFUND_ELIGIBLE_STATUSES = new Set(["PAID", "PRINTING", "EXPIRED"]);
@@ -90,6 +110,8 @@ export default function AdminMachineDetail() {
   const { machine, jobs } = data;
   const flaggedJobs = jobs.filter((j) => j.flag);
   const uniqueCustomers = new Set(jobs.filter((j) => j.customer_id).map((j) => j.customer_id)).size;
+  const hasPin = machine.latitude != null && machine.longitude != null;
+  const postal = [machine.address, machine.city, machine.state, machine.pincode].filter(Boolean).join(", ");
 
   return (
     <DashboardLayout>
@@ -97,11 +119,59 @@ export default function AdminMachineDetail() {
         ← Back to machines
       </Link>
 
-      <div className="mt-2 mb-6">
+      <div className="mt-2 mb-4">
         <h1 className="text-xl font-semibold text-gray-800">{machine.name || machine.machine_id}</h1>
         <p className="text-sm text-gray-500">
-          {machine.machine_id} · {uniqueCustomers} unique customer{uniqueCustomers !== 1 ? "s" : ""} · {jobs.length} total jobs
+          {machine.machine_id} · {machine.module === "SHOP" ? "Shop computer" : "Kiosk"} · {uniqueCustomers} unique customer
+          {uniqueCustomers !== 1 ? "s" : ""} · {jobs.length} total jobs
         </p>
+      </div>
+
+      <div className="card p-5 mb-6">
+        <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <InfoItem label="Location">
+            {machine.location_label}
+            {machine.landmark && <span className="block text-xs text-gray-400">Near {machine.landmark}</span>}
+          </InfoItem>
+          <InfoItem label="Address">
+            {postal || null}
+            {hasPin && (
+              <a
+                href={`https://www.google.com/maps?q=${machine.latitude},${machine.longitude}`}
+                target="_blank"
+                rel="noreferrer"
+                className="block text-xs text-brand-600 hover:text-brand-700"
+              >
+                Open in Google Maps →
+              </a>
+            )}
+          </InfoItem>
+          <InfoItem label="On-site contact">
+            {machine.contact_name || machine.contact_phone ? (
+              <>
+                {machine.contact_name}
+                {machine.contact_phone && (
+                  <a href={`tel:${machine.contact_phone}`} className="block text-xs text-brand-600 hover:text-brand-700">
+                    {machine.contact_phone}
+                  </a>
+                )}
+              </>
+            ) : null}
+          </InfoItem>
+          <InfoItem label="Timings">{timingsLabel(machine)}</InfoItem>
+          <InfoItem label="Vendor">
+            {machine.owner_vendor_id ? (
+              <Link to={`/admin/vendors/${machine.owner_vendor_id}`} className="text-brand-600 hover:text-brand-700">
+                {machine.vendor_name}
+              </Link>
+            ) : (
+              "Unassigned"
+            )}
+          </InfoItem>
+          <InfoItem label="Printer / installed">
+            {[machine.printer_model, machine.installed_at && `since ${machine.installed_at}`].filter(Boolean).join(", ") || null}
+          </InfoItem>
+        </dl>
       </div>
 
       {refundError && (
