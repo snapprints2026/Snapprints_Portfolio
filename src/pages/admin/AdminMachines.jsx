@@ -48,6 +48,10 @@ const PREFILL_FROM_SIBLING = [
   ["pincode", "pincode"],
 ];
 
+// Must match MACHINE_ID_PREFIX in adminController.js
+const ID_PREFIX = { KIOSK: "SPK", SHOP: "SPS" };
+const MODULE_LABEL = { KIOSK: "Kiosk (Raspberry Pi)", SHOP: "Shop computer" };
+
 const vendorLabel = (v) => v.business_name || v.full_name;
 
 const allowedModules = (v) =>
@@ -307,15 +311,25 @@ export default function AdminMachines() {
                     />
                   </Field>
                 )}
-                <Field label="Module" required>
-                  <select className="input" value={form.module} onChange={handleChange("module")}>
-                    {moduleOptions.map((m) => (
-                      <option key={m} value={m}>
-                        {m === "KIOSK" ? "Kiosk (Raspberry Pi)" : "Shop computer"}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
+                {formMode === "create" ? (
+                  <Field
+                    label="Module"
+                    required
+                    hint={`Machine ID will be ${ID_PREFIX[form.module] || "SPK"}xxxx, e.g. ${ID_PREFIX[form.module] || "SPK"}1001.`}
+                  >
+                    <select className="input" value={form.module} onChange={handleChange("module")}>
+                      {moduleOptions.map((m) => (
+                        <option key={m} value={m}>
+                          {MODULE_LABEL[m]}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                ) : (
+                  <Field label="Module" hint="Fixed: it's part of the machine ID.">
+                    <input className="input bg-gray-50" disabled value={MODULE_LABEL[form.module] || form.module} />
+                  </Field>
+                )}
                 <Field label="Machine name" hint="Optional. Defaults to the machine ID." className="sm:col-span-2">
                   <input className="input" value={form.name} onChange={handleChange("name")} placeholder="Library kiosk 1" />
                 </Field>
