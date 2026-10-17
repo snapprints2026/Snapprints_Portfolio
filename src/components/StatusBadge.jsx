@@ -19,6 +19,11 @@ const STYLES = {
   PRINTED: "bg-green-100 text-green-700",
   FAILED: "bg-red-100 text-red-700",
   EXPIRED: "bg-orange-100 text-orange-700",
+    // job_issues.status + print_jobs.refund_status
+  OPEN: "bg-amber-100 text-amber-700",
+  AUTO_APPROVED: "bg-green-100 text-green-700",
+  PROCESSING: "bg-blue-100 text-blue-700",
+  PROCESSED: "bg-green-100 text-green-700",
 };
 
 export default function StatusBadge({ status }) {

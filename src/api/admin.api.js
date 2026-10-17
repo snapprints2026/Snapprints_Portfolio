@@ -25,7 +25,15 @@ export const adminApi = {
 
   // Refunds
   refundJob: (jobId) => axiosClient.post(`/admin/jobs/${jobId}/refund`).then((r) => r.data),
-
+    // Customer issues ("paid but no print") + support search
+  getIssues: (status) =>
+    axiosClient.get(`/admin/issues?status=${status || "OPEN"}`).then((r) => r.data),
+  resolveIssue: (issueId, action, note) =>
+    axiosClient.patch(`/admin/issues/${issueId}`, { action, note }).then((r) => r.data),
+  searchJobs: (q) =>
+    axiosClient.get(`/admin/jobs/search?q=${encodeURIComponent(q)}`).then((r) => r.data),
+  openIssue: (jobId, reason, details) =>
+    axiosClient.post(`/admin/jobs/${jobId}/issue`, { reason, details }).then((r) => r.data),
   // Vendors
   getVendors: () => axiosClient.get("/admin/vendors").then((r) => r.data),
   getVendorDetail: (vendorId) => axiosClient.get(`/admin/vendors/${vendorId}`).then((r) => r.data),

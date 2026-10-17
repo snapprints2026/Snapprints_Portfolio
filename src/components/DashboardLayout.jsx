@@ -8,6 +8,7 @@ const ADMIN_NAV = [
   { to: "/admin/vendors", label: "Vendors", icon: "🏪" },
   { to: "/admin/customers", label: "Customers", icon: "👥" },
   { to: "/admin/withdrawals", label: "Withdrawals", icon: "💸" },
+    { to: "/admin/issues", label: "Issues & Refunds", icon: "🛟" },
 ];
 
 const VENDOR_NAV = [

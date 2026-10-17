@@ -13,12 +13,14 @@ import AdminVendorDetail from "./pages/admin/AdminVendorDetail";
 import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminCustomerDetail from "./pages/admin/AdminCustomerDetail";
 import AdminWithdrawals from "./pages/admin/AdminWithdrawals";
+import AdminIssues from "./pages/admin/AdminIssues";
 
 import VendorOverview from "./pages/vendor/VendorOverview";
 import VendorMachines from "./pages/vendor/VendorMachines";
 import VendorMachineDetail from "./pages/vendor/VendorMachineDetail";
 import VendorBank from "./pages/vendor/VendorBank";
 import VendorWithdrawals from "./pages/vendor/VendorWithdrawals";
+
 
 export default function App() {
   return (
@@ -36,6 +38,7 @@ export default function App() {
       <Route path="/admin/customers" element={<ProtectedRoute requiredRole="admin"><AdminCustomers /></ProtectedRoute>} />
       <Route path="/admin/customers/:customerId" element={<ProtectedRoute requiredRole="admin"><AdminCustomerDetail /></ProtectedRoute>} />
       <Route path="/admin/withdrawals" element={<ProtectedRoute requiredRole="admin"><AdminWithdrawals /></ProtectedRoute>} />
+      <Route path="/admin/issues" element={<ProtectedRoute requiredRole="admin"><AdminIssues /></ProtectedRoute>} />
 
       {/* Vendor */}
       <Route path="/vendor" element={<ProtectedRoute requiredRole="vendor"><VendorOverview /></ProtectedRoute>} />
