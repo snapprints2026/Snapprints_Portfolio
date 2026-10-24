@@ -16,7 +16,7 @@ export default function MachineShowcase() {
         >
           <div className="absolute w-64 h-64 sm:w-96 sm:h-96 rounded-full bg-brand-200/30 blur-[100px] sm:blur-[120px]" />
           <img
-            src="/images/machine.png"
+            src="/images/SnapPrints-hero-machine.png"
             alt="SnapPrints Machine"
             className="relative w-52 sm:w-72 md:w-96 lg:w-[420px] h-auto rounded-3xl drop-shadow-[0_0_40px_rgba(19,107,255,0.2)] animate-float"
           />
