@@ -5,7 +5,7 @@ import { X, ArrowLeft, Rocket, MapPin, Building2, Check } from "lucide-react";
 import LOCATIONS from "../../data/locations.json";
 import { motion, AnimatePresence } from "framer-motion";
 
-const API_BASE = import.meta.env.Backend_API || "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000/api";
 
 const OPTIONS = [
   {
