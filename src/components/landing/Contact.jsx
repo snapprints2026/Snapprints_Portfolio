@@ -34,7 +34,7 @@ export default function Contact({ onDemoClick }) {
               {/* Right */}
               <div className="space-y-4 sm:space-y-8">
                 {[
-                  { Icon: Mail, label: "Email", value: "support.snapprints@gmail.com", href: "mailto:support.snapprints@gmail.com", breakAll: true },
+                  { Icon: Mail, label: "Email", value: "snapprintscontact@gmail.com", href: "mailto:snapprintscontact@gmail.com", breakAll: true },
                   { Icon: Phone, label: "Phone", value: "+91 7798305769", href: "tel:+917798305769" },
                   { Icon: MapPin, label: "Location", value: "Ahilyanagar, Maharashtra, India" },
                 ].map(({ Icon, label, value, href, breakAll }, i) => (
