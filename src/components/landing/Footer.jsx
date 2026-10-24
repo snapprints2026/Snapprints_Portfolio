@@ -47,8 +47,8 @@ export default function Footer() {
           <ul className="space-y-2 sm:space-y-3 text-brand-200 text-sm sm:text-base break-words">
             <li>
               📧{" "}
-              <a href="mailto:support.snapprints@gmail.com" className="hover:text-white transition">
-                support.snapprints@gmail.com
+              <a href="mailto:snapprintscontact@gmail.com" className="hover:text-white transition">
+                snapprintscontact@gmail.com
               </a>
             </li>
             <li>
